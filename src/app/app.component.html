@@ -1,0 +1,30 @@
+<tree-root #tree [nodes]="nodes" [options]="treeOptions">
+  <ng-template
+    #treeNodeFullTemplate
+    let-node
+    let-index="index"
+    let-templates="templates"
+  >
+    <div [class.tree-line]="!node.isRoot">
+      <div #treeNode [style.cursor]="node.hasChildren ? 'pointer' : 'normal'">
+        <span>
+          <span *ngIf="node.hasChildren">
+            <i (click)="node.mouseAction('expanderClick', $event)">+</i>
+          </span>
+          <span
+            (click)="
+              node.hasChildren
+                ? node.mouseAction('expanderClick', $event)
+                : null
+            "
+            >{{ node.data.name }}</span
+          >
+        </span>
+      </div>
+      <tree-node-children
+        [node]="node"
+        [templates]="templates"
+      ></tree-node-children>
+    </div>
+  </ng-template>
+</tree-root>
